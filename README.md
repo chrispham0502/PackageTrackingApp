@@ -1,2 +1,2 @@
 # PackageTrackingApp
-An app designed to give the user automated updates of packages
+An app designed to give the user automated updates on packages
