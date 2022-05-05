@@ -1,11 +1,21 @@
 <!doctype html>
 <html>
+  <head>
+    <title>{{title}}</title>
+  </head>
+  <body>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <div class = "container">
       <form action = "/" METHOD ="POST">
-        <input type="text" placeholder="Test Name" name = "name">
-        <input type="text" placeholder="Test Email" name = "email">
-        <input type="text" placeholder="Test Password" name = "password">
-        <input type="submit" value="Add Test Val">
+        <input type="text" placeholder="Carrier" name = "carrier">
+        <input type="text" placeholder="Tracking Number" name = "trackingNum">
+        <input type="submit" value="Add Test Tracking">
       </form>
+      {% for event in events %}
+        <h4>
+          {{event.occurred_at}} {{event.description}}
+        </h4>
+      {% endfor %}
     </div>
+  </body>
 </html>
