@@ -1,3 +1,4 @@
+from cProfile import run
 from re import A
 import requests
 import json
@@ -15,7 +16,8 @@ def processURL(URL):
     'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
     }
     
-    response_data = requests.request("GET", URL, headers=headers, data=payload).json
+    response = requests.request("GET", URL, headers=headers, data=payload).text
+    response_data = json.loads(response)
 
     return response_data
 
@@ -38,7 +40,7 @@ def processPackage(carrier_id, tracking_number, name = None, description = None)
     events = package_data['events']
 
     processEvents (tmp.id, events)
-
+    
     db.session.commit()
 
     return Package.query.filter_by(tracking_number = p_tracking_number).first()
@@ -69,13 +71,17 @@ def getPackageByTrackingNumber(tracking_number):
 #     return datetime_obj
 
 
+# def sendUpdateEmail(package):
+
 
 '''
 from packtrack import db
 from packtrack import methods
-from packtrack.models import User, Package, Event
+from packtrack.models import Email, Package, Event, User, Link
 db.drop_all()
 db.create_all()
+
+e1 = Email(email_address = 'test1@gmail.com')
 
 tmp = Package.query.filter_by(tracking_number = tracking_number).first()
 getPackageByTrackingNumber(tracking_number)
@@ -84,5 +90,10 @@ getPackageByTrackingNumber(tracking_number)
 trackingNumber = "9400111202508526786562"
 carrierCode = "usps"
 methods.processPackage(carrierCode, trackingNumber, 'Test Name', 'alo alo')
+
+e1 = Email(email_address = 'test1@gmail.com')
+e = Email(email_address = 'test2@gmail.com')
+e3 = Email(email_address = 'test3@gmail.com')
+p1 = Package(tracking_number = "123", status_code = "DE", status_description = "Delivered", name = "test1", description = "test package")
 
 '''
