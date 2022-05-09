@@ -46,7 +46,7 @@ class Event(db.Model):
 class Email(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email_address = db.Column(db.String(100), nullable = False)
-    packages = db.relationship('Package', secondary = 'link', lazy = True)
+    packages = db.relationship('Package', secondary = 'link', lazy = True, overlaps = "emails")
 
     def __repr__(self):
         return f"Email('{self.id}', '{self.email_address}')"
