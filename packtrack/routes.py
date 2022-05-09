@@ -12,7 +12,7 @@ def index():
   if request.method == "POST":
     carrier = request.form['carrier']
     tracking_number = request.form['trackingNum']
-
+    
     package = methods.getPackageByTrackingNumber(tracking_number)
 
     # If package doesn't exist in database yet, process new package
@@ -31,14 +31,16 @@ def index():
     return render_template("index.html", title = title)
 
 
+# Webhook Handler
 @app.route('/webhook', methods=['POST'])
 def respond():
 
     payload = request.json
 
-    lastest_event = payload["event"]["body"]["data"]["events"][0]
+    events = payload["event"]["body"]["data"]["events"]
 
-    print("\n\n" + lastest_event['occurred_at'][:10]  + ' - ' + lastest_event['occurred_at'][11:-4] + '\n' + \
-    lastest_event['description'] +  '\n' + lastest_event['city_locality'] + ' - ' + lastest_event['state_province'] + "\n\n")
+    for lastest_event in events:
+      print("\n\n" + lastest_event['occurred_at'][:10]  + ' - ' + lastest_event['occurred_at'][11:-4] + '\n' + \
+      lastest_event['description'] +  '\n' + lastest_event['city_locality'] + ' - ' + lastest_event['state_province'] + "\n\n")
 
     return Response(status=200)
