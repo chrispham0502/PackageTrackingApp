@@ -1,25 +1,44 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, Response
 from packtrack import app
 from packtrack import db
+from packtrack import methods
 from packtrack.models import User, Package
+import json
 
 
 @app.route("/", methods = ['POST', 'GET'])
 def index():
-    title = "Test App"
-    if request.method == "POST":
-      test_name = request.form['name']
-      test_email = request.form['email']
-      test_password = request.form['password']
-      new_test = User(username = test_name, email = test_email, password = test_password)
+  title = "Test App"
+  if request.method == "POST":
+    carrier = request.form['carrier']
+    tracking_number = request.form['trackingNum']
 
-      try:
-        db.session.add(new_test)
-        db.session.commit()
-        return render_template("index.html", title = title)
+    package = methods.getPackageByTrackingNumber(tracking_number)
 
-      except:
-        return "Error"
+    # If package doesn't exist in database yet, process new package
+    if package is None:
+      title = "New Package"
+      package = methods.processPackage(carrier, tracking_number)
 
+    # If already existed then proceed
     else:
-      return render_template("index.html", title = title)
+      title = "Old Package"
+
+    events = package.events
+    return render_template("index.html", title = title, events = events)
+
+  else:
+    return render_template("index.html", title = title)
+
+
+@app.route('/webhook', methods=['POST'])
+def respond():
+
+    payload = request.json
+
+    lastest_event = payload["event"]["body"]["data"]["events"][0]
+
+    print("\n\n" + lastest_event['occurred_at'][:10]  + ' - ' + lastest_event['occurred_at'][11:-4] + '\n' + \
+    lastest_event['description'] +  '\n' + lastest_event['city_locality'] + ' - ' + lastest_event['state_province'] + "\n\n")
+
+    return Response(status=200)
