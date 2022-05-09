@@ -14,8 +14,8 @@ def processURL(URL):
     'Host': 'api.shipengine.com',
     'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
     }
-    response = requests.request("GET", URL, headers=headers, data=payload).text
-    response_data = json.loads(response)
+    
+    response_data = requests.request("GET", URL, headers=headers, data=payload).json
 
     return response_data
 
