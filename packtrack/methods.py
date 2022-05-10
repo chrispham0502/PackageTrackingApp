@@ -3,7 +3,7 @@ from re import A
 import requests
 import json
 from datetime import datetime
-from packtrack.models import Package, User, Link, Event
+from packtrack.models import Package, User, Link
 from packtrack import db
 
 def getURL(carrier_id, tracking_number):
@@ -37,18 +37,18 @@ def processPackage(carrier_code, tracking_number, name, description):
     return new_package
 
 
-def processEvents(package_id, eventsList):
-    for event in eventsList:
-        e_package_id = package_id
-        e_occurred_at = datetime.strptime(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ')
-        e_description = event['description']
-        e_city = event['city_locality']
-        e_state = event['state_province']
+# def processEvents(package_id, eventsList):
+#     for event in eventsList:
+#         e_package_id = package_id
+#         e_occurred_at = datetime.strptime(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ')
+#         e_description = event['description']
+#         e_city = event['city_locality']
+#         e_state = event['state_province']
         
-        new_event = Event(package_id = e_package_id, occurred_at=e_occurred_at, description = e_description, \
-            city = e_city, state = e_state)
+#         new_event = Event(package_id = e_package_id, occurred_at=e_occurred_at, description = e_description, \
+#             city = e_city, state = e_state)
         
-        db.session.add(new_event)
+        # db.session.add(new_event)
     
 def getTrackingEvents(carrier_id, tracking_number):
     URL = getURL(carrier_id, tracking_number)
