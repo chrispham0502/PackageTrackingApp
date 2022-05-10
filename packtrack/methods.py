@@ -3,7 +3,7 @@ from re import A
 import requests
 import json
 from datetime import datetime
-from packtrack.models import Package, User, Link
+from packtrack.models import Package, User, Link, Event
 from packtrack import db
 
 def getURL(carrier_id, tracking_number):
@@ -21,30 +21,20 @@ def processURL(URL):
 
     return response_data
 
-def processPackage(carrier_id, tracking_number, name = None, description = None):
-    URL = getURL(carrier_id, tracking_number)
-    package_data = processURL(URL)
-    p_tracking_number = package_data['tracking_number']
-    p_status_code = package_data['status_code']
-    p_status_description = package_data['status_description']
-    p_name = name
-    p_description = description
-    new_package = Package(tracking_number = p_tracking_number, status_code = p_status_code, \
-                     status_description = p_status_description, name = p_name, description = p_description)
+def processUser(email_address):
+    new_user = User(email = email_address)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return new_user
+
+def processPackage(carrier_code, tracking_number, name, description):
     
+    new_package = Package(carrier_code = carrier_code, tracking_number = tracking_number, name = name, description = description)
     db.session.add(new_package)
     db.session.commit()
-
-    tmp = Package.query.filter_by(tracking_number = p_tracking_number).first()
     
-    events = package_data['events']
-
-    processEvents (tmp.id, events)
-    
-    db.session.commit()
-
-    return Package.query.filter_by(tracking_number = p_tracking_number).first()
-    
+    return new_package
 
 
 def processEvents(package_id, eventsList):
@@ -60,6 +50,13 @@ def processEvents(package_id, eventsList):
         
         db.session.add(new_event)
     
+def getTrackingEvents(carrier_id, tracking_number):
+    URL = getURL(carrier_id, tracking_number)
+    package_data = processURL(URL)
+    
+    events = package_data['events']
+
+    return events
 
 def getPackageByTrackingNumber(tracking_number):
     tmp = Package.query.filter_by(tracking_number = tracking_number).first()
