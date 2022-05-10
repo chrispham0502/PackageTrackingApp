@@ -6,16 +6,32 @@
   <body>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <div class = "container">
-      <form action = "/" METHOD ="POST">
-        <input type="text" placeholder="Carrier" name = "carrier">
-        <input type="text" placeholder="Tracking Number" name = "trackingNum">
-        <input type="submit" value="Add Test Tracking">
-      </form>
-      {% for event in events %}
-        <h4>
-          {{event.occurred_at}} {{event.description}}
-        </h4>
-      {% endfor %}
+      {% if state == 'load' or state == 'track_package' %}
+        <form action = "/" METHOD ="POST">
+          <input type="text" placeholder="Carrier" name = "carrier">
+          <input type="text" placeholder="Tracking Number" name = "trackingNum">
+          <input type="hidden" name="btn_identifier" value="track_package" />
+          <input type="submit" value="Add Test Tracking">
+        </form>
+        {% for event in events %}
+          <b>
+            {{event['occurred_at'][:10]}} <br>
+            {{event['occurred_at'][11:-4]}} <br>
+            {{event['description']}}
+          </b>
+        {% endfor %}
+      {% endif %}
+
+      {% if state == 'track_package' %}
+      <div class = "form-popup">
+        <form action = "/" METHOD ="POST">
+          <input type="text" placeholder="Name This Package" name = "name">
+          <input type="text" placeholder="Description" name = "description">
+          <input type="text" placeholder="Email" name = "email" required = "required">
+          <input type="hidden" name="btn_identifier" value="subscribe_package" />
+          <input type="submit" value="Sub">
+        </form>
+      {% endif %}
     </div>
   </body>
 </html>
