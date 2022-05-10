@@ -3,7 +3,7 @@ from re import A
 import requests
 import json
 from datetime import datetime
-from packtrack.models import Package, User, Event
+from packtrack.models import Package, User, Link
 from packtrack import db
 
 def getURL(carrier_id, tracking_number):
@@ -77,7 +77,7 @@ def getPackageByTrackingNumber(tracking_number):
 '''
 from packtrack import db
 from packtrack import methods
-from packtrack.models import Email, Package, Event, User, Link
+from packtrack.models import Package, User, Link
 db.drop_all()
 db.create_all()
 
@@ -91,9 +91,9 @@ trackingNumber = "9400111202508526786562"
 carrierCode = "usps"
 methods.processPackage(carrierCode, trackingNumber, 'Test Name', 'alo alo')
 
-e1 = Email(email_address = 'test1@gmail.com')
+u1 = User(email_address = 'test1@gmail.com')
 e = Email(email_address = 'test2@gmail.com')
 e3 = Email(email_address = 'test3@gmail.com')
-p1 = Package(tracking_number = "123", status_code = "DE", status_description = "Delivered", name = "test1", description = "test package")
+p1 = Package(carrier_code = "usps", tracking_number = "123", name = "test1", description = "test package")
 
 '''
