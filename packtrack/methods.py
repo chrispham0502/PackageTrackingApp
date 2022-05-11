@@ -4,7 +4,11 @@ import requests
 import json
 from datetime import datetime
 from packtrack.models import Package, User, Link
+import os
 from packtrack import db
+
+
+API_KEY = os.environ.get('SHIPENGINE_API_KEY')
 
 def getURL(carrier_id, tracking_number):
     return "https://api.shipengine.com/v1/tracking?carrier_code=" + carrier_id + "&tracking_number=" + tracking_number
@@ -13,7 +17,7 @@ def processURL(URL):
     payload={}
     headers = {
     'Host': 'api.shipengine.com',
-    'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
+    'API-Key': API_KEY
     }
     
     response = requests.request("GET", URL, headers=headers, data=payload).text
@@ -22,6 +26,15 @@ def processURL(URL):
     return response_data
 
 def processUser(email_address):
+
+    # attempt to get user from the database
+    user = User.query.filter_by(email = email_address).first()
+
+    # return if exist
+    if user:
+        return user
+
+    # if not create new user
     new_user = User(email = email_address)
     db.session.add(new_user)
     db.session.commit()
@@ -30,6 +43,14 @@ def processUser(email_address):
 
 def processPackage(carrier_code, tracking_number, name, description):
     
+    # attempt to get package from the database
+    package = Package.query.filter_by(carrier_code = carrier_code, tracking_number = tracking_number).first()
+
+    # return if exist
+    if package:
+        return package
+
+    # if not create new package
     new_package = Package(carrier_code = carrier_code, tracking_number = tracking_number, name = name, description = description)
     db.session.add(new_package)
     db.session.commit()
@@ -59,15 +80,15 @@ def getTrackingEvents(carrier_id, tracking_number):
     return events
 
 def getPackageByTrackingNumber(tracking_number):
-    tmp = Package.query.filter_by(tracking_number = tracking_number).first()
-    return tmp
+    package = Package.query.filter_by(tracking_number = tracking_number).first()
+    return package
 
 def subscribePackage(carrierCode, trackingNumber):
     URL = "https://api.shipengine.com/v1/tracking/start?carrier_code=" + carrierCode + "&tracking_number=" + trackingNumber
     payload={}
     headers = {
         'Host': 'api.shipengine.com',
-        'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
+        'API-Key': API_KEY
     }
 
     response = requests.request("POST", URL, headers=headers, data=payload)
@@ -80,7 +101,7 @@ def unsubscribePackage(carrierCode, trackingNumber):
     payload={}
     headers = {
         'Host': 'api.shipengine.com',
-        'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
+        'API-Key': API_KEY
     }
 
     response = requests.request("POST", URL, headers=headers, data=payload)
