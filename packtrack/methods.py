@@ -62,6 +62,36 @@ def getPackageByTrackingNumber(tracking_number):
     tmp = Package.query.filter_by(tracking_number = tracking_number).first()
     return tmp
 
+def subscribePackage(carrierCode, trackingNumber):
+    URL = "https://api.shipengine.com/v1/tracking/start?carrier_code=" + carrierCode + "&tracking_number=" + trackingNumber
+    payload={}
+    headers = {
+        'Host': 'api.shipengine.com',
+        'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
+    }
+
+    response = requests.request("POST", URL, headers=headers, data=payload)
+    
+    print(response.text)
+
+
+def unsubscribePackage(carrierCode, trackingNumber):
+    URL = "https://api.shipengine.com/v1/tracking/stop?carrier_code=" + carrierCode + "&tracking_number=" + trackingNumber
+    payload={}
+    headers = {
+        'Host': 'api.shipengine.com',
+        'API-Key': 'TEST_2dTAIchnrNr3xKwycD9+KpHeFFn4BJzHX28XK+MssZs'
+    }
+
+    response = requests.request("POST", URL, headers=headers, data=payload)
+
+    print(response.text)
+
+
+
+
+
+
 
 # def dateConvert(dateString, dateStringFormat):
 #     datetime_obj = datetime.strptime(dateString, dateStringFormat)
