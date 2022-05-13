@@ -4,11 +4,17 @@
     <title>{{title}}</title>
   </head>
   <body>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-    <div class = "container">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <div class = "text-blue-600">
       {% if state == 'load' or state == 'track_package' %}
         <form action = "/" METHOD ="POST">
-          <input type="text" placeholder="Carrier" name = "carrier">
+          <!-- <input type="text" placeholder="Carrier" name = "carrier"> -->
+          <select name="carrier">
+            <option value="">Carrier</option>
+            <option value="USPS">USPS</option>
+            <option value="UPS">UPS</option>
+            <option value="FedEx">FedEx</option>
+          </select>        
           <input type="text" placeholder="Tracking Number" name = "trackingNum">
           <input type="hidden" name="btn_identifier" value="track_package" />
           <input type="submit" value="Add Test Tracking">

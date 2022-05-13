@@ -109,7 +109,11 @@ def unsubscribePackage(carrierCode, trackingNumber):
     print(response.text)
 
 
+def getCarrierCode(carrierName):
 
+    carriers = {'USPS':'usps','UPS':'ups','FedEx':'fedex'}
+
+    return carriers[carrierName]
 
 
 
