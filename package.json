@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "tailwindcss": "^3.0.24"
+  },
+  "name": "packagetrackingapp",
+  "description": "An app designed to give the user automated updates on packages",
+  "version": "1.0.0",
+  "scripts": {
+    "tailwind": "npx tailwindcss -i ./packtrack/static/styles_input.css -o ./packtrack/static/styles.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrispham0502/PackageTrackingApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrispham0502/PackageTrackingApp/issues"
+  },
+  "homepage": "https://github.com/chrispham0502/PackageTrackingApp#readme"
+}
