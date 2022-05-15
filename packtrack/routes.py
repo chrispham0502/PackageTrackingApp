@@ -9,12 +9,17 @@ from packtrack import methods
 from packtrack.models import User, Package
 import json
 import os
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 packtrack_email_address = os.environ.get('PYTHON_GMAIL_ADDRESS')
 packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 
+
+
 @app.route("/", methods = ['POST', 'GET'])
-def index():
+def home():
   title = "Test App"
   if request.method == "POST":
     
@@ -23,12 +28,14 @@ def index():
 
     # request to track package
     if state == 'track_package':
-      session['carrier'] = request.form['carrier']
+      session['carrier_name'] = request.form['carrier']
       session['tracking_number'] = request.form['trackingNum']
 
-      events = methods.getTrackingEvents(session['carrier'], session['tracking_number'])
+      carrierCode = methods.getCarrierCode(session['carrier_name'])
+
+      events = methods.getTrackingEvents(carrierCode, session['tracking_number'])
     
-      return render_template("index.html", title = title, events = events, state = state)
+      return render_template("home.html", title = title, events = events, state = state)
 
     # request to subscribe to package update
     else:
@@ -53,7 +60,10 @@ def index():
       
       return "Sending info of package " + package_name + " to: " + email
   else:
-    return render_template("index.html", title = title, state = 'load')
+    
+    carriers = ['USPS', 'UPS', 'FedEx']
+
+    return render_template("home.html", title = title, state = 'load', carriers = carriers)
 
 
 # Webhook Handler
