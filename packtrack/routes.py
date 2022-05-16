@@ -65,6 +65,9 @@ def home():
 
     return render_template("home.html", title = title, state = 'load', carriers = carriers)
 
+@app.route('/track', methods=['POST', 'GET'])
+def track():
+  return render_template("track.html")
 
 # Webhook Handler
 @app.route('/webhook', methods=['POST'])

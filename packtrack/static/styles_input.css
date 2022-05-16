@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.timeline-first{
+    border-image: linear-gradient(to top, white 50%,transparent 50%) 1 100%;
+}
+
+.timeline-last{
+    border-image: linear-gradient(to bottom, white 40%,transparent 90%) 1 100%;
+}
+
+@layer components{
+
+    
+
+    .event-date{
+        @apply
+            text-2xl text-blue-300
+            px-3 py-4
+            font-bold tracking-widest
+    }
+
+
+    .timeline{
+        @apply
+            border-l-4 border-white
+            ml-5 pt-8
+
+    }
+
+
+    .dot-latest{
+        @apply
+            absolute top-1 -left-4
+            hover:scale-110 duration-300 ease-in-out
+            bg-gradient-to-tr from-yellow-500 to-blue-500 hover:from-blue-500 hover:via-green-200 hover:to-yellow-400
+            h-7 w-7
+            rounded-full
+            border-4 border-white
+    }
+
+    .dot{
+        @apply
+            absolute top-2 -left-2.5
+            bg-blue-100
+            h-4 w-4
+            rounded-full
+            border-4 border-white
+    }
+
+    .timeline-date{
+        @apply
+            text-xs font-bold
+            opacity-50 tracking-widest
+    }
+
+    .timeline-title{
+        @apply
+            text-xl text-gray-400 font-semibold
+    }
+}
