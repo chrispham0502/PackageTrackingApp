@@ -20,50 +20,64 @@ packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 
 @app.route("/", methods = ['POST', 'GET'])
 def home():
-  title = "Test App"
   if request.method == "POST":
     
-    # get button request
-    state = request.form['btn_identifier']
+      session['carrierCode'] = methods.getCarrierCode(request.form['carrier'])
+      session['trackingNumber'] = request.form['trackingNum']
 
-    # request to track package
-    if state == 'track_package':
-      session['carrier_name'] = request.form['carrier']
-      session['tracking_number'] = request.form['trackingNum']
+      packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
 
-      carrierCode = methods.getCarrierCode(session['carrier_name'])
+      packageStatus =  packageData['status_description'].upper()
+      packageStatusDescription = packageData["carrier_status_description"]
 
-      events = methods.getTrackingEvents(carrierCode, session['tracking_number'])
+      events = packageData['events']
+
+      for event in events:
+        event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
+        event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
+
+      latest_event = events[0]
+      first_event = events[-1]
+
+      eventNum = len(events)
     
-      return render_template("home.html", title = title, events = events, state = state)
+      # If there's only one event
+      if eventNum == 1:
+        return render_template("track.html", case = "one",lastest_event = latest_event, status = packageStatus)
+      
+      # There are more than one event
+      events = events[1:eventNum-1]
+      return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = packageStatus, status_description = packageStatusDescription)
+        
+  return render_template("home.html")
 
     # request to subscribe to package update
-    else:
+  #   else:
 
-      # get form details
-      package_name = request.form['name']
-      package_description = request.form['description']
-      email = request.form['email']
+  #     # get form details
+  #     package_name = request.form['name']
+  #     package_description = request.form['description']
+  #     email = request.form['email']
 
-      # process new user
-      new_user = methods.processUser(email)
+  #     # process new user
+  #     new_user = methods.processUser(email)
 
-      # process new package
-      new_package = methods.processPackage(session['carrier'], session['tracking_number'], package_name, package_description)
+  #     # process new package
+  #     new_package = methods.processPackage(session['carrier'], session['tracking_number'], package_name, package_description)
 
-      # add user to package subscribe list
-      new_package.users.append(new_user)
+  #     # add user to package subscribe list
+  #     new_package.users.append(new_user)
 
-      db.session.commit()
+  #     db.session.commit()
 
-      methods.subscribePackage(session['carrier'], session['tracking_number'])
+  #     methods.subscribePackage(session['carrier'], session['tracking_number'])
       
-      return "Sending info of package " + package_name + " to: " + email
-  else:
+  #     return "Sending info of package " + package_name + " to: " + email
+  # else:
     
-    carriers = ['USPS', 'UPS', 'FedEx']
+  #   carriers = ['USPS', 'UPS', 'FedEx']
 
-    return render_template("home.html", title = title, state = 'load', carriers = carriers)
+  return render_template("home.html")
 
 @app.route('/track', methods=['POST', 'GET'])
 def track():

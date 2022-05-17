@@ -70,14 +70,12 @@ def processPackage(carrier_code, tracking_number, name, description):
 #             city = e_city, state = e_state)
         
         # db.session.add(new_event)
-    
-def getTrackingEvents(carrier_id, tracking_number):
-    URL = getURL(carrier_id, tracking_number)
-    package_data = processURL(URL)
-    
-    events = package_data['events']
 
-    return events
+def getPackageData(carrier_id, tracking_number):
+    URL = getURL(carrier_id, tracking_number)
+    packageData = processURL(URL)
+    
+    return packageData
 
 def getPackageByTrackingNumber(tracking_number):
     package = Package.query.filter_by(tracking_number = tracking_number).first()
@@ -118,15 +116,20 @@ def getCarrierCode(carrierName):
 
 
 
-# def dateConvert(dateString, dateStringFormat):
-#     datetime_obj = datetime.strptime(dateString, dateStringFormat)
-#     return datetime_obj
+def datetimeConvert(dateStringInput, dateStringInputFormat, dateStringOutputFormat):
+    datetime_obj = datetime.strptime(dateStringInput, dateStringInputFormat)
+    return datetime_obj.strftime(dateStringOutputFormat).upper()
+
+
 
 
 # def sendUpdateEmail(package):
 
 
 '''
+
+event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ'
+
 from packtrack import db
 from packtrack import methods
 from packtrack.models import Package, User, Link
