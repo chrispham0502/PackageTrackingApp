@@ -2,11 +2,16 @@
 {% block title %}PackTrack App{% endblock %}
 {% block main %}
 <!-- Main -->
-<div class="container w-full md:w-full mx-auto flex flex-wrap pt-10 md:pt-16 xl:pt-32 xl:w-1/2 2xl:pt-60 2xl:w-5/12">
+<div class="container flex flex-wrap mx-auto w-full 
+            pt-10 
+            md:w-full md:pt-16
+            xl:pt-32 xl:w-1/2
+            2xl:pt-60 2xl:w-5/12">
 
   <div class="flex flex-col w-full justify-center lg:items-center overflow-y-hidden">
     <h1 class="w-full text-5xl mt-32 font-bold leading-tight text-center  text-white
                 md:mt-52
+                lg:mt-8
                 xl:text-5xl opacity-90 e">
       TRACK YOUR
       <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-blue-500">
@@ -16,8 +21,10 @@
 
     <form action = "/" METHOD ="POST" class="bg-black opacity-60 shadow-lg rounded-full
                                              w-5/6 mx-auto mt-10 px-6 pt-6 pb-2
-                                             lg:px-11 lg:pb-6"> 
-      <div class="mb-4 lg:pt-4">
+                                             lg:px-11 lg:pb-6
+                                             xl:px-9 xl:pb-4
+                                             2xl:px-11 2xl:pb-6"> 
+      <div class="mb-4 lg:pt-4 xl:pt-2 2xl:pt-4">
         <!-- <h1 class="text-xl hover:text-white ease-in-out duration-300">Provide Tracking Information</h1>> -->
         <div class="flex">
           <select name="carrier" class="shadow appearance-none border rounded-l-3xl w-1/5 p-3 pl-2 sm:pl-6 mr-0.5 text-gray-400  leading-tight  hover:scale-y-110 duration-300 ease-in-out text-xs md:text-base">
