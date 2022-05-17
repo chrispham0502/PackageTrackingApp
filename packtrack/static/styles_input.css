@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .timeline-first{
-    border-image: linear-gradient(to top, white 50%,transparent 50%) 1 100%;
+    border-image: linear-gradient(to top, white 65%,transparent 65%) 1 100%;
 }
 
 .timeline-last{
@@ -14,11 +14,11 @@
 
     
 
-    .event-date{
+    .tracking-h1{
         @apply
-            text-2xl text-blue-300
-            px-3 py-4
-            font-bold tracking-widest
+            text-2xl text-yellow-600
+            pb-3
+            font-bold font-serif
     }
 
 
@@ -32,9 +32,9 @@
 
     .dot-latest{
         @apply
-            absolute top-1 -left-4
+            absolute top-0 -left-4
             hover:scale-110 duration-300 ease-in-out
-            bg-gradient-to-tr from-yellow-500 to-blue-500 hover:from-blue-500 hover:via-green-200 hover:to-yellow-400
+            bg-gradient-to-tr from-yellow-600 to-blue-600 hover:from-blue-600 hover:via-green-200 hover:to-yellow-600
             h-7 w-7
             rounded-full
             border-4 border-white
@@ -42,8 +42,8 @@
 
     .dot{
         @apply
-            absolute top-2 -left-2.5
-            bg-blue-100
+            absolute top-1 -left-2.5
+            bg-blue-200 hover:bg-yellow-200
             h-4 w-4
             rounded-full
             border-4 border-white
@@ -51,12 +51,29 @@
 
     .timeline-date{
         @apply
-            text-xs font-bold
-            opacity-50 tracking-widest
+            text-sm
+            font-semibold
+            text-blue-400
     }
 
-    .timeline-title{
+    .timeline-time{
         @apply
-            text-xl text-gray-400 font-semibold
+            text-xs text-blue-400 font-semibold
+            tracking-wider
+    }
+
+    .timeline-description{
+        @apply
+            text-white text-sm
+            md:text-base
+            lg:text-lg
+            
+        }
+
+    .timeline-location{
+        @apply
+            text-white text-xs
+            md:text-sm
+            lg:text-base
     }
 }
