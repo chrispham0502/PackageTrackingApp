@@ -22,10 +22,11 @@ packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 def home():
   return render_template("home.html")
 
-@app.route('/track', methods=['POST'])
+@app.route('/track', methods=['GET'])
 def track():
-    session['carrierCode'] = methods.getCarrierCode(request.form['carrier'])
-    session['trackingNumber'] = request.form['trackingNum']
+
+    session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
+    session['trackingNumber'] = request.args.get('trackingNum')
 
     packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
 
