@@ -18,70 +18,38 @@ packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 
 
 
-@app.route("/", methods = ['POST', 'GET'])
+@app.route("/", methods = ['POST','GET'])
 def home():
-  if request.method == "POST":
-    
-      session['carrierCode'] = methods.getCarrierCode(request.form['carrier'])
-      session['trackingNumber'] = request.form['trackingNum']
-
-      packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
-
-      packageStatus =  packageData['status_description'].upper()
-      packageStatusDescription = packageData["carrier_status_description"]
-
-      events = packageData['events']
-
-      for event in events:
-        event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
-        event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
-
-      latest_event = events[0]
-      first_event = events[-1]
-
-      eventNum = len(events)
-    
-      # If there's only one event
-      if eventNum == 1:
-        return render_template("track.html", case = "one",lastest_event = latest_event, status = packageStatus)
-      
-      # There are more than one event
-      events = events[1:eventNum-1]
-      return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = packageStatus, status_description = packageStatusDescription)
-        
   return render_template("home.html")
 
-    # request to subscribe to package update
-  #   else:
-
-  #     # get form details
-  #     package_name = request.form['name']
-  #     package_description = request.form['description']
-  #     email = request.form['email']
-
-  #     # process new user
-  #     new_user = methods.processUser(email)
-
-  #     # process new package
-  #     new_package = methods.processPackage(session['carrier'], session['tracking_number'], package_name, package_description)
-
-  #     # add user to package subscribe list
-  #     new_package.users.append(new_user)
-
-  #     db.session.commit()
-
-  #     methods.subscribePackage(session['carrier'], session['tracking_number'])
-      
-  #     return "Sending info of package " + package_name + " to: " + email
-  # else:
-    
-  #   carriers = ['USPS', 'UPS', 'FedEx']
-
-  return render_template("home.html")
-
-@app.route('/track', methods=['POST', 'GET'])
+@app.route('/track', methods=['POST'])
 def track():
-  return render_template("track.html")
+    session['carrierCode'] = methods.getCarrierCode(request.form['carrier'])
+    session['trackingNumber'] = request.form['trackingNum']
+
+    packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
+
+    packageStatus =  packageData['status_description'].upper()
+    packageStatusDescription = packageData["carrier_status_description"]
+
+    events = packageData['events']
+
+    for event in events:
+      event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
+      event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
+
+    latest_event = events[0]
+    first_event = events[-1]
+
+    eventNum = len(events)
+  
+    # If there's only one event
+    if eventNum == 1:
+      return render_template("track.html", case = "one",lastest_event = latest_event, status = packageStatus)
+    
+    # There are more than one event
+    events = events[1:eventNum-1]
+    return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = packageStatus, status_description = packageStatusDescription)
 
 # Webhook Handler
 @app.route('/webhook', methods=['POST'])
