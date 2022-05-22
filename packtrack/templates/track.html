@@ -14,6 +14,7 @@
         </h1>
     </div>
 
+    <!-- Tracking Information -->
     <div class="rounded-3xl flex flex-col w-full sm:w-3/4 md:w-full xl:w-2/3 justify-center items-center content-center mx-auto px-5 md:px-10 py-5 mt-10 bg-black opacity-40">
         
         <section class="w-full"> 
@@ -76,11 +77,20 @@
         </section>
     </div>
 
-    
-
-    <div class="flex flex-col w-full md:w-full xl:w-2/3  justify-center overflow-y-hidden mx-auto mt-12 ">
-         <!-- Text -->
-         <div>
+    <!-- Bottom -->
+    <div class="flex flex-col w-full md:w-full xl:w-2/3  justify-center mx-auto mt-12 ">
+        <!-- If delivered give option to go back to homepage -->
+        {% if status != "DELIVERED" %}
+        <div>
+            <form action="/">
+                <button class= "w-full font-bold bg-gradient-to-r border-2 border-gray-400 from-yellow-300 to-blue-300 hover:from-blue-300 hover:via-green-100 hover:to-yellow-300 text-white rounded-2xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out
+                py-4 xl:py-6" type="submit">Track Another Package</button>
+            </form>
+        </div>
+        <!-- If not delivered give option to subscribe to package update -->
+        {% else %}
+        <!-- Text -->
+        <div>
             <h1 class="font-bold text-center text-white opacity-75
                 md:text-2xl ">
                 GET UPDATES FOR THIS PACKAGE
@@ -141,8 +151,8 @@
                 </div>     
             </div>
         </form>
-        
-    </div>
+        {% endif %}
+    </div>   
 </div>
 
 {% endblock %}
