@@ -6,7 +6,7 @@
 
     <div class=" w-full 2xl:w-3/4 justify-center overflow-y-hidden mx-auto px-5">
         <!-- Text -->
-        <h1 class="text-3xl md:text-4xl xl:text-5xl opacity-90 font-bold leading-tight text-center md:text-lef text-white">
+        <h1 class="text-3xl md:text-4xl xl:text-5xl opacity-90 leading-tight text-center md:text-lef text-white font-test2">
             <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-blue-500 text-center">
             PACKAGE
             </span>
@@ -28,6 +28,8 @@
             <div class="sticky top-0 pt-10 bg-black z-10 shadow-2xl shadow-black">
                 <h2 class="tracking-h1"> Tracking History </h2>
             </div>
+
+            <!-- Most recent event -->
             <div class="timeline timeline-first self-center -mt-5 ">
                 <div class="relative ">
                     <div class="dot-latest"></div>
@@ -43,6 +45,7 @@
                 </div>
             </div>
             
+            <!-- Events in between -->
             {% for event in events %}
             <div class="timeline">
                 <div class="relative">
@@ -59,7 +62,8 @@
                 </div>
             </div>
             {% endfor %}
-
+            
+            <!-- First event created -->
             <div class="timeline timeline-last">
                 <div class="relative">
                     <div class="dot"></div>
@@ -77,8 +81,8 @@
         </section>
     </div>
 
-    <!-- Bottom -->
-    <div class="flex flex-col w-full md:w-full xl:w-2/3  justify-center mx-auto mt-12 ">
+    <!-- Bottom section-->
+    <div class="flex flex-col w-full md:w-full xl:w-2/3 justify-center mx-auto mt-12">
         <!-- If delivered give option to go back to homepage -->
         {% if status != "DELIVERED" %}
         <div>
@@ -91,8 +95,8 @@
         {% else %}
         <!-- Text -->
         <div>
-            <h1 class="font-bold text-center text-white opacity-75
-                md:text-2xl ">
+            <h1 class="text-center text-white opacity-75
+                md:text-2xl  font-test2">
                 GET UPDATES FOR THIS PACKAGE
             </h1>
         </div>
