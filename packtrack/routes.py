@@ -24,7 +24,7 @@ def home():
 
 @app.route('/track', methods=['GET'])
 def track():
-
+  
     session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
     session['trackingNumber'] = request.args.get('trackingNum')
 
@@ -43,10 +43,10 @@ def track():
     first_event = events[-1]
 
     eventNum = len(events)
-  
+    
     # If there's only one event
     if eventNum == 1:
-      return render_template("track.html", case = "one",lastest_event = latest_event, status = packageStatus)
+      return render_template("track.html", case = "one",latest_event = latest_event, status = packageStatus, status_description = packageStatusDescription)
     
     # There are more than one event
     events = events[1:eventNum-1]
