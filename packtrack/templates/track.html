@@ -29,7 +29,23 @@
                 <h2 class="tracking-h1"> Tracking History </h2>
             </div>
 
-            <!-- Most recent event -->
+            {% if case == 'one' %}
+            <div class="timeline timeline-only self-center -mt-5 ">
+                <div class="relative ">
+                    <div class="dot-latest"></div>
+                    <div class="pl-10 ">
+                        <p class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{latest_event['event_date']}}</p>
+                        <p class="text-base font-bold bg-clip-text bg-gradient-to-t from-white to-blue-400 text-transparent">{{ latest_event['event_time'] }}</p>
+                        <p class="text-white font-semibold md:text-xl lg:text-2xl">{{ latest_event['description'] }} </p>
+                        <p1 class="text-white font-semibold md:text-lg lg:text-xl">{{latest_event['city_locality']}}</p1>
+                        {% if latest_event['state_province'] != "" %}
+                            <p1 class="text-white font-semibold md:text-lg lg:text-xl"> - {{latest_event['state_province']}}</p1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <!-- Most recent event -->
             <div class="timeline timeline-first self-center -mt-5 ">
                 <div class="relative ">
                     <div class="dot-latest"></div>
@@ -77,7 +93,10 @@
                         {% endif %}
                     </div>
                 </div>
-            </div>          
+            </div>
+            {% endif %}
+
+                      
         </section>
     </div>
 
@@ -158,5 +177,6 @@
         {% endif %}
     </div>   
 </div>
+
 
 {% endblock %}
