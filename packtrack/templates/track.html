@@ -37,9 +37,11 @@
                         <p class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{latest_event['event_date']}}</p>
                         <p class="text-base font-bold bg-clip-text bg-gradient-to-t from-white to-blue-400 text-transparent">{{ latest_event['event_time'] }}</p>
                         <p class="text-white font-semibold md:text-xl lg:text-2xl">{{ latest_event['description'] }} </p>
-                        <p1 class="text-white font-semibold md:text-lg lg:text-xl">{{latest_event['city_locality']}}</p1>
-                        {% if latest_event['state_province'] != "" %}
-                            <p1 class="text-white font-semibold md:text-lg lg:text-xl"> - {{latest_event['state_province']}}</p1>
+                        {% if latest_event['city_locality'] not in ["", None] %}
+                            <p1 class="text-white font-semibold md:text-lg lg:text-xl">{{latest_event['city_locality']}}</p1>
+                            {% if latest_event['state_province'] not in ["", None] %}
+                                <p1 class="text-white font-semibold md:text-lg lg:text-xl"> - {{latest_event['state_province']}}</p1>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -53,9 +55,11 @@
                         <p class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{latest_event['event_date']}}</p>
                         <p class="text-base font-bold bg-clip-text bg-gradient-to-t from-white to-blue-400 text-transparent">{{ latest_event['event_time'] }}</p>
                         <p class="text-white font-semibold md:text-xl lg:text-2xl">{{ latest_event['description'] }} </p>
-                        <p1 class="text-white font-semibold md:text-lg lg:text-xl">{{latest_event['city_locality']}}</p1>
-                        {% if latest_event['state_province'] != "" %}
-                            <p1 class="text-white font-semibold md:text-lg lg:text-xl"> - {{latest_event['state_province']}}</p1>
+                        {% if latest_event['city_locality'] not in ["", None] %}
+                            <p1 class="text-white font-semibold md:text-lg lg:text-xl">{{latest_event['city_locality']}}</p1>
+                            {% if latest_event['state_province'] not in ["", None] %}
+                                <p1 class="text-white font-semibold md:text-lg lg:text-xl"> - {{latest_event['state_province']}}</p1>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -70,9 +74,11 @@
                         <p class="timeline-date">{{event['event_date']}}</p>
                         <p class="timeline-time">{{event['event_time'] }}</p>
                         <p class="timeline-description">{{event['description'] }}</p>
+                        {% if event['city_locality'] not in ["", None] %}
                         <p1 class="timeline-location ">{{event['city_locality']}}</p1>
-                        {% if event['state_province'] != "" %}
-                            <p1 class="timeline-location"> - {{event['state_province']}}</p1>
+                            {% if event['state_province'] not in ["", None] %}
+                                <p1 class="timeline-location"> - {{event['state_province']}}</p1>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -87,9 +93,11 @@
                         <p class="timeline-date">{{first_event['event_date']}}</p>
                         <p class="timeline-time">{{first_event['event_time'] }}</p>
                         <p class="timeline-description">{{first_event['description'] }}</p>
+                        {% if first_event['city_locality'] not in ["", None] %}
                         <p1 class="timeline-location">{{first_event['city_locality']}}</p1>
-                        {% if first_event['state_province'] != "" %}
-                            <p1 class="timeline-location"> - {{first_event['state_province']}}</p1>
+                            {% if first_event['state_province'] not in ["", None] %}
+                                <p1 class="timeline-location"> - {{first_event['state_province']}}</p1>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
