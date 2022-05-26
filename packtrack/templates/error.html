@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Something Went Wrong{% endblock %}
+{% block main %}
+<!-- Main -->
+<div class="flex flex-col container w-5/6 mx-auto pt-20 xl:pt-40 xl:w-1/2 2xl:pt-20 2xl:w-5/12 items-center ">
+    <div class="rounded-3xl flex flex-col w-full sm:w-3/4 md:w-full xl:w-2/3 justify-center items-center content-center mx-auto px-5 md:px-10 py-5 mt-10 bg-black opacity-40">
+        <div>
+            <h2 class="tracking-h1 text-center"> Something went wrong</h2>
+            <p class="text-white 2xl:text-lg text-center"> Please try again and make sure the carrier and tracking number information are correct.</p>
+        </div>
+    </div>
+    <div class="flex flex-col w-full md:w-full xl:w-2/3 justify-center mx-auto mt-7">
+        <form action="/">
+            <button class= "w-full font-bold bg-gradient-to-r border-2 border-gray-400 from-yellow-300 to-blue-300 hover:from-blue-300 hover:via-green-100 hover:to-yellow-300 text-white rounded-2xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out
+            py-4 xl:py-6" type="submit">Track Another Package</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="w-full fixed bottom-10 text-sm text-center">
+  <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; PackTrack App 2022</a>
+  - Developed by
+  <a class="text-gray-500 no-underline hover:no-underline" href="/">Chris Pham</a>
+</div>
+{% endblock %}
+  

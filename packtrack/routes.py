@@ -17,40 +17,49 @@ packtrack_email_address = os.environ.get('PYTHON_GMAIL_ADDRESS')
 packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 
 
-
+# Home Page
 @app.route("/", methods = ['POST','GET'])
 def home():
   return render_template("home.html")
 
+# Tracking Page
 @app.route('/track', methods=['GET'])
 def track():
-  
-    session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
-    session['trackingNumber'] = request.args.get('trackingNum')
 
-    packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
+    try:
+      session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
+      session['trackingNumber'] = request.args.get('trackingNum')
 
-    packageStatus =  packageData['status_description'].upper()
-    packageStatusDescription = packageData["carrier_status_description"]
+      packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
 
-    events = packageData['events']
+      packageStatus =  packageData['status_description'].upper()
+      packageStatusDescription = packageData["carrier_status_description"]
 
-    for event in events:
-      event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
-      event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
+      events = packageData['events']
 
-    latest_event = events[0]
-    first_event = events[-1]
+      for event in events:
+        event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
+        event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
 
-    eventNum = len(events)
-    
-    # If there's only one event
-    if eventNum == 1:
-      return render_template("track.html", case = "one",latest_event = latest_event, status = packageStatus, status_description = packageStatusDescription)
-    
-    # There are more than one event
-    events = events[1:eventNum-1]
-    return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = packageStatus, status_description = packageStatusDescription)
+      latest_event = events[0]
+      first_event = events[-1]
+
+      eventNum = len(events)
+      
+      # If there's only one event
+      if eventNum == 1:
+        return render_template("track.html", case = "one",latest_event = latest_event, status = packageStatus, status_description = packageStatusDescription)
+      
+      # There are more than one event
+      events = events[1:eventNum-1]
+      return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = packageStatus, status_description = packageStatusDescription)
+    except:
+      return redirect("/error")
+
+# Error Page
+@app.route("/error", methods = ['POST','GET'])
+def error():
+  return render_template("error.html")
 
 # Webhook Handler
 @app.route('/webhook', methods=['POST'])
