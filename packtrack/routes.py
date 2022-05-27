@@ -56,6 +56,13 @@ def track():
     except:
       return redirect("/error")
 
+# Update Page
+@app.route("/update", methods = ['POST','GET'])
+def update():
+  packageName = request.form['packageName']
+  email = request.form['email']
+  return render_template("update.html", packageName = packageName, email = email)
+
 # Error Page
 @app.route("/error", methods = ['POST','GET'])
 def error():

@@ -127,7 +127,7 @@
                 GET UPDATES FOR THIS PACKAGE
             </h1>
         </div>
-        <form id="subform" action="/" class="flex bg-black opacity-40 rounded-3xl justify-center w-full p-4 mt-3 mb-5">
+        <form id="subform" method="POST" action="/update" class="flex bg-black opacity-40 rounded-3xl justify-center w-full p-4 mt-3 mb-5">
             <div class="flex flex-row w-full mx-auto 
                         p-1 pb-1
                         md:p-3 md:pb-1
@@ -142,6 +142,7 @@
                             md:p-3 md:text-base"
                     type="text"
                     placeholder="Name Package"
+                    name="packageName"
                     />
                 </div>
                 <div class="w-3/5 "> 
@@ -152,6 +153,7 @@
                     type="text"
                     placeholder="Your Email"
                     required="required"
+                    name="email"
                     />
                 </div>     
             </div> 
