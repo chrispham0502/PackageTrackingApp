@@ -57,11 +57,41 @@ def track():
       return redirect("/error")
 
 # Update Page
-@app.route("/update", methods = ['POST','GET'])
+@app.route("/update", methods = ['POST'])
 def update():
   packageName = request.form['packageName']
   email = request.form['email']
-  return render_template("update.html", packageName = packageName, email = email)
+
+  # See if package and user already exist in db
+  package = methods.getPackageByTrackingNumber(session['trackingNumber'])
+  user = methods.getUserByEmail(email)
+
+  # If user exist, check for package
+  if user:
+    # If package exist, see if the user is already in the mailing list, if not, add
+    if package:
+      if user not in package.users:
+        package.users.append(user)
+      else:
+        return render_template("update.html", packageName = package.name, email = email, inlist = True)
+    # If package doesn't exist, create new package then add
+    else:
+      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'], name = packageName)
+      package.users.append(user)
+      db.session.add(package)
+  # If user doesn't exit, create new user
+  else:
+    user = User(email=email)
+    db.session.add(user)
+    # If package doesn't exist, create new package
+    if not package:
+      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'], name = packageName)
+    package.users.append(user)
+    db.session.add(package)
+
+  db.session.commit()
+
+  return render_template("update.html", packageName = packageName, email = email, inlist = False)
 
 # Error Page
 @app.route("/error", methods = ['POST','GET'])

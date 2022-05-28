@@ -5,6 +5,7 @@
 <div class="flex flex-col container w-5/6 mx-auto pt-20 xl:pt-40 xl:w-1/2 2xl:pt-20 2xl:w-5/12 items-center ">
     <div class="rounded-3xl flex flex-col w-full sm:w-3/4 md:w-full xl:w-2/3 justify-center items-center content-center mx-auto px-5 md:px-10 py-5 mt-10 bg-black opacity-40">
         <div>
+            {% if inlist == False %}
             <h2 class="tracking-h1 text-center">You are subscribed</h2>
             <p class="text-white 2xl:text-lg text-center">
                 Updates for your package
@@ -12,6 +13,13 @@
                 will be sent to 
                 <span class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{email}}</span>
             </p>
+            {% else %}
+            <h2 class="tracking-h1 text-center">You are already subscribed</h2>
+            <p class="text-white 2xl:text-lg text-center">
+                You are already signed up for updates for this package. Updates will be sent to
+                <span class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{email}}</span>
+            </p>
+            {% endif %}
         </div>
     </div>
     <div class="flex flex-col w-full md:w-full xl:w-2/3 justify-center mx-auto mt-7">
