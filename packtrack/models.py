@@ -20,12 +20,11 @@ class Package(db.Model):
     carrier_code = db.Column(db.String(50), nullable = False)
     tracking_number = db.Column(db.String(50), unique=True, nullable = False)
     name = db.Column(db.String(100))
-    description = db.Column(db.Text)
     users = db.relationship('User', secondary = 'link', lazy = True)
 
     def __repr__(self):
         return f"Package('{self.id}', '{self.tracking_number}')"
-
+        
 #p1 = Package(tracking_number = '9400111202508526786562', status_code = 'DE', status_description = 'Delivered')
 
 # class Event(db.Model):
