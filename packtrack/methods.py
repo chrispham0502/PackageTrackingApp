@@ -120,7 +120,9 @@ def datetimeConvert(dateStringInput, dateStringInputFormat, dateStringOutputForm
     datetime_obj = datetime.strptime(dateStringInput, dateStringInputFormat)
     return datetime_obj.strftime(dateStringOutputFormat).upper()
 
-
+def getUserByEmail(email):
+    user = User.query.filter_by(email = email).first()
+    return user
 
 
 # def sendUpdateEmail(package):
