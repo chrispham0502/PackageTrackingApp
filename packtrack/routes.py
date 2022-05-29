@@ -18,7 +18,7 @@ packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 
 
 # Home Page
-@app.route("/", methods = ['POST','GET'])
+@app.route("/")
 def home():
   return render_template("home.html")
 
@@ -94,7 +94,7 @@ def update():
   return render_template("update.html", packageName = packageName, email = email, inlist = False)
 
 # Error Page
-@app.route("/error", methods = ['POST','GET'])
+@app.route("/error")
 def error():
   return render_template("error.html")
 
