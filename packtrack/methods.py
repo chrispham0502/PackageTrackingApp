@@ -113,20 +113,17 @@ def getCarrierCode(carrierName):
 
     return carriers[carrierName]
 
-
-
-
 def datetimeConvert(dateStringInput, dateStringInputFormat, dateStringOutputFormat):
     datetime_obj = datetime.strptime(dateStringInput, dateStringInputFormat)
-    return datetime_obj.strftime(dateStringOutputFormat).upper()
+    return datetime_obj.strftime(dateStringOutputFormat)
 
 def getUserByEmail(email):
     user = User.query.filter_by(email = email).first()
     return user
 
-
-# def sendUpdateEmail(package):
-
+def getUserEmails(package):
+    emails = [user.email for user in package.users]
+    return emails
 
 '''
 
