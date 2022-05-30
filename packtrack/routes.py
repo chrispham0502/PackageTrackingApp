@@ -39,8 +39,8 @@ def track():
       events = packageData['events']
 
       for event in events:
-        event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
-        event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
+        event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y').upper()
+        event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p').upper()
 
       latest_event = events[0]
       first_event = events[-1]
@@ -108,33 +108,47 @@ def respond():
     # Get tracking number and lastest tracking event from payload
     tracking_number = payload["data"]["tracking_number"]
     lastest_event = payload["data"]["events"][0]
+    event_date = methods.datetimeConvert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
+    event_time = methods.datetimeConvert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
     status = payload["data"]["status_code"]
     status_description = payload["data"]['status_description']
-
-    body = lastest_event['occurred_at'][:10]  + ' - ' + lastest_event['occurred_at'][11:-4] + '\n' + \
-    lastest_event['description'] +  '\n' + lastest_event['city_locality'] + ' - ' + lastest_event['state_province']
 
     # Get package in db
     package = methods.getPackageByTrackingNumber(tracking_number)
 
-    for user in package.users:
-      print("\nPackage Update" + package.name + status + "\n\n"+body + "\n\nFrom: " + packtrack_email_address + " - To: " + user.email)
+    # Composing message subject
+    subject = "Package Update"
+    if package.name:
+      subject += " - " + package.name
+    subject += " - " + status_description
 
-    # msg = EmailMessage()
-    # msg['Subject'] = 'Pakage Update'
+    # Email list
+    mail_list = methods.getUserEmails(package)
 
-    # for email in package.emails:
-    #   msg['To'] = email
-    #   msg.set_content(body)
+    # Composing message body
+    body = event_date  + '\n' + event_time + '\n' + lastest_event['description']
+    if lastest_event['city_locality']:
+      body += "\n" + lastest_event['city_locality']
+      if lastest_event['state_province']:
+       body += ' - ' + lastest_event['state_province']
 
-    #   with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-    #     smtp.login(packtrack_email_address, packtrack_email_password)
-    #     smtp.send_message(msg)
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['To'] = mail_list
+    msg.set_content(body)
+    
+
+    print(mail_list)
+    print(subject + "\n\n" + body)
+
+      # with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+      #   smtp.login(packtrack_email_address, packtrack_email_password)
+      #   smtp.send_message(msg)
 
     # If package is delivered then delete in database
 
-    if status == "DE":
-      db.session.delete(package)
-      db.session.commit()
+    # if status == "DE":
+    # db.session.delete(package)
+    # db.session.commit()
 
     return Response(status=200)
