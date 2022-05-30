@@ -2,6 +2,7 @@ import email
 import re
 import smtplib
 from email.message import EmailMessage
+from struct import pack
 from flask import render_template, url_for, flash, redirect, request, Response, session
 from packtrack import app
 from packtrack import db
@@ -104,16 +105,20 @@ def respond():
 
     payload = request.json
 
+    # Get tracking number and lastest tracking event from payload
     tracking_number = payload["data"]["tracking_number"]
     lastest_event = payload["data"]["events"][0]
+    status = payload["data"]["status_code"]
+    status_description = payload["data"]['status_description']
 
     body = lastest_event['occurred_at'][:10]  + ' - ' + lastest_event['occurred_at'][11:-4] + '\n' + \
     lastest_event['description'] +  '\n' + lastest_event['city_locality'] + ' - ' + lastest_event['state_province']
 
+    # Get package in db
     package = methods.getPackageByTrackingNumber(tracking_number)
 
     for user in package.users:
-      print("\nSending message: \n\n" + body + "\n\nFrom: " + packtrack_email_address + " - To: " + user.email)
+      print("\nPackage Update" + package.name + status + "\n\n"+body + "\n\nFrom: " + packtrack_email_address + " - To: " + user.email)
 
     # msg = EmailMessage()
     # msg['Subject'] = 'Pakage Update'
@@ -125,5 +130,11 @@ def respond():
     #   with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
     #     smtp.login(packtrack_email_address, packtrack_email_password)
     #     smtp.send_message(msg)
+
+    # If package is delivered then delete in database
+
+    if status == "DE":
+      db.session.delete(package)
+      db.session.commit()
 
     return Response(status=200)
