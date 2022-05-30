@@ -125,6 +125,14 @@ def getUserEmails(package):
     emails = [user.email for user in package.users]
     return emails
 
+def getLink(user, package):
+    user_id = user.id
+    package_id = package.id
+
+    link = Link.query.filter_by(user_id = user_id, package_id = package_id).first()
+
+    return link
+
 '''
 
 event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ'

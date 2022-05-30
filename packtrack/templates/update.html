@@ -16,7 +16,9 @@
             {% else %}
             <h2 class="tracking-h1 text-center">You are already subscribed</h2>
             <p class="text-white 2xl:text-lg text-center">
-                You are already signed up for updates for this package. Updates will be sent to
+                Package was found under the name 
+                <span class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{packageName}}</span>.
+                You are already signed up for this package and updates will be sent to
                 <span class="text-lg font-bold bg-clip-text bg-gradient-to-t from-blue-500 to-yellow-400 text-transparent tracking-tight">{{email}}</span>
             </p>
             {% endif %}

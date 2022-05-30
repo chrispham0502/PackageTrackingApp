@@ -19,7 +19,6 @@ class Package(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     carrier_code = db.Column(db.String(50), nullable = False)
     tracking_number = db.Column(db.String(50), unique=True, nullable = False)
-    name = db.Column(db.String(100))
     users = db.relationship('User', secondary = 'link', lazy = True)
 
     def __repr__(self):
@@ -51,6 +50,7 @@ class Package(db.Model):
 class Link(db.Model):
     user_id = db.Column(db.Integer,  db.ForeignKey('user.id'), primary_key = True )
     package_id = db.Column(db.Integer,  db.ForeignKey('package.id'), primary_key = True )
+    package_name = db.Column(db.String(100))
     
 
 

@@ -74,10 +74,11 @@ def update():
       if user not in package.users:
         package.users.append(user)
       else:
-        return render_template("update.html", packageName = package.name, email = email, inlist = True)
+        link = methods.getLink(user, package)
+        return render_template("update.html", packageName = link.package_name, email = email, inlist = True)
     # If package doesn't exist, create new package then add
     else:
-      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'], name = packageName)
+      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'])
       package.users.append(user)
       db.session.add(package)
   # If user doesn't exit, create new user
@@ -86,9 +87,14 @@ def update():
     db.session.add(user)
     # If package doesn't exist, create new package
     if not package:
-      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'], name = packageName)
+      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'])
     package.users.append(user)
     db.session.add(package)
+
+  db.session.commit()
+
+  link = methods.getLink(user, package)
+  link.package_name = packageName
 
   db.session.commit()
 
@@ -116,30 +122,29 @@ def respond():
     # Get package in db
     package = methods.getPackageByTrackingNumber(tracking_number)
 
-    # Composing message subject
-    subject = "Package Update"
-    if package.name:
-      subject += " - " + package.name
-    subject += " - " + status_description
+    for user in package.users:
+      print(user.email)
+      package_name = methods.getLink(user, package).package_name
+      
+      # Composing message subject
+      subject = "Package Update"
+      if package_name:
+        subject += " - " + package_name
+      subject += " - " + status_description
+  
+      # Composing message body
+      body = event_date  + '\n' + event_time + '\n' + lastest_event['description']
+      if lastest_event['city_locality']:
+        body += "\n" + lastest_event['city_locality']
+        if lastest_event['state_province']:
+          body += ' - ' + lastest_event['state_province']
 
-    # Email list
-    mail_list = methods.getUserEmails(package)
-
-    # Composing message body
-    body = event_date  + '\n' + event_time + '\n' + lastest_event['description']
-    if lastest_event['city_locality']:
-      body += "\n" + lastest_event['city_locality']
-      if lastest_event['state_province']:
-       body += ' - ' + lastest_event['state_province']
-
-    msg = EmailMessage()
-    msg['Subject'] = subject
-    msg['To'] = mail_list
-    msg.set_content(body)
+      # msg = EmailMessage()
+      # msg['Subject'] = subject
+      # msg['To'] = user.email
+      # msg.set_content(body)
     
-
-    print(mail_list)
-    print(subject + "\n\n" + body)
+      print(subject + "\n\n" + body)
 
       # with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
       #   smtp.login(packtrack_email_address, packtrack_email_password)
