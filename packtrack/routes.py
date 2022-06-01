@@ -29,7 +29,7 @@ def track():
 
     try:
       session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
-      session['trackingNumber'] = request.args.get('trackingNum').replace(" ","")
+      session['trackingNumber'] = request.args.get('trackingNum').replace(" ","").lower()
 
       packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
 
@@ -112,9 +112,10 @@ def error():
 def respond():
 
     payload = request.json
+    print(payload)
 
     # Get tracking number and lastest tracking event from payload
-    tracking_number = payload["data"]["tracking_number"]
+    tracking_number = payload["data"]["tracking_number"].replace(" ","").lower()
     lastest_event = payload["data"]["events"][0]
     event_date = methods.datetimeConvert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
     event_time = methods.datetimeConvert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
@@ -153,8 +154,9 @@ def respond():
         smtp.send_message(msg)
 
     # If package is delivered then delete in database
-    if status == "DE":
-      db.session.delete(package)
-      db.session.commit()
+    # if status == "DE":
+    #   db.session.delete(package)
+    #   db.session.commit()
 
     return Response(status=200)
+
