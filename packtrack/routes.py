@@ -10,10 +10,6 @@ from packtrack import methods
 from packtrack.models import User, Package
 import json
 import os
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-
 packtrack_email_address = os.environ.get('PYTHON_GMAIL_ADDRESS')
 packtrack_email_password = os.environ.get('PYTHON_GMAIL_PASSWORD')
 
@@ -98,7 +94,7 @@ def update():
 
   db.session.commit()
 
-  methods.subscribePackage(session['carrierCode'], session['trackingNumber'])
+  methods.subscribePackage(package)
 
   return render_template("update.html", packageName = packageName, email = email, inlist = False)
 
@@ -135,7 +131,7 @@ def respond():
       subject += " - " + status_description
   
       # Composing message body
-      body = "Update details of your package " + package_name + ":\n\n" + event_date  + '\n' + event_time + '\n\n' + lastest_event['description']
+      body = "Update details of your package " + package_name + ":\n\n" + event_date  + '\n' + event_time + '\n' + lastest_event['description']
       if lastest_event['city_locality']:
         body += "\n" + lastest_event['city_locality']
         if lastest_event['state_province']:
@@ -152,8 +148,9 @@ def respond():
         smtp.login(packtrack_email_address, packtrack_email_password)
         smtp.send_message(msg)
 
-    # If package is delivered then delete in database
+    # If package is delivered then unsubscribe and delete in database
     if status == "DE":
+      methods.unsubscribePackage(package)
       db.session.delete(package)
       db.session.commit()
 
