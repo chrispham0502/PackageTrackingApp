@@ -141,8 +141,6 @@ def respond():
       msg['Subject'] = subject
       msg['To'] = user.email
       msg.set_content(body)
-    
-      print(subject + "\n\n" + body)
  
       with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
         smtp.login(packtrack_email_address, packtrack_email_password)
