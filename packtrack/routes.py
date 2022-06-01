@@ -98,6 +98,8 @@ def update():
 
   db.session.commit()
 
+  methods.subscribePackage(session['carrierCode'], session['trackingNumber'])
+
   return render_template("update.html", packageName = packageName, email = email, inlist = False)
 
 # Error Page
@@ -139,21 +141,20 @@ def respond():
         if lastest_event['state_province']:
           body += ' - ' + lastest_event['state_province']
 
-      # msg = EmailMessage()
-      # msg['Subject'] = subject
-      # msg['To'] = user.email
-      # msg.set_content(body)
+      msg = EmailMessage()
+      msg['Subject'] = subject
+      msg['To'] = user.email
+      msg.set_content(body)
     
       print(subject + "\n\n" + body)
-
-      # with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-      #   smtp.login(packtrack_email_address, packtrack_email_password)
-      #   smtp.send_message(msg)
+ 
+      with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(packtrack_email_address, packtrack_email_password)
+        smtp.send_message(msg)
 
     # If package is delivered then delete in database
-
-    # if status == "DE":
-    # db.session.delete(package)
-    # db.session.commit()
+    if status == "DE":
+      db.session.delete(package)
+      db.session.commit()
 
     return Response(status=200)
