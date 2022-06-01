@@ -112,7 +112,6 @@ def error():
 def respond():
 
     payload = request.json
-    print(payload)
 
     # Get tracking number and lastest tracking event from payload
     tracking_number = payload["data"]["tracking_number"].replace(" ","").lower()
@@ -124,7 +123,7 @@ def respond():
 
     # Get package in db
     package = methods.getPackageByTrackingNumber(tracking_number)
-
+    
     for user in package.users:
       print(user.email)
       package_name = methods.getLink(user, package).package_name
@@ -136,7 +135,7 @@ def respond():
       subject += " - " + status_description
   
       # Composing message body
-      body = event_date  + '\n' + event_time + '\n' + lastest_event['description']
+      body = "Update details of your package " + package_name + ":\n\n" + event_date  + '\n' + event_time + '\n\n' + lastest_event['description']
       if lastest_event['city_locality']:
         body += "\n" + lastest_event['city_locality']
         if lastest_event['state_province']:
@@ -154,9 +153,9 @@ def respond():
         smtp.send_message(msg)
 
     # If package is delivered then delete in database
-    # if status == "DE":
-    #   db.session.delete(package)
-    #   db.session.commit()
+    if status == "DE":
+      db.session.delete(package)
+      db.session.commit()
 
     return Response(status=200)
 
