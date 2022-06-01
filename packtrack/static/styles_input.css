@@ -6,11 +6,15 @@
 @tailwind utilities;
 
 .timeline-first{
-    border-image: linear-gradient(to top, white 65%,transparent 65%) 1 100%;
+    border-image: linear-gradient(to bottom, transparent 35%,white 35%) 1 100%;
 }
 
 .timeline-last{
     border-image: linear-gradient(to bottom, white 40%,transparent 90%) 1 100%;
+}
+
+.timeline-only{
+    border-image: linear-gradient(to bottom, transparent 35%,white 40%, transparent 90%) 1 100%;
 }
 
 @layer components{
