@@ -29,7 +29,7 @@ def track():
 
     try:
       session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
-      session['trackingNumber'] = request.args.get('trackingNum')
+      session['trackingNumber'] = request.args.get('trackingNum').replace(" ","")
 
       packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
 
