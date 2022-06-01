@@ -59,15 +59,10 @@ def update():
   packageName = request.form['packageName']
   email = request.form['email']
 
-  try:
+  # See if package and user already exist in db
+  package = methods.getPackageByTrackingNumber(session['trackingNumber'])
+  user = methods.getUserByEmail(email)
 
-    # See if package and user already exist in db
-    package = methods.getPackageByTrackingNumber(session['trackingNumber'])
-    user = methods.getUserByEmail(email)
-
-  except:
-    return "Data base problem"
-    
   # If user exist, check for package
   if user:
     # If package exist, see if the user is already in the mailing list, if not, add
