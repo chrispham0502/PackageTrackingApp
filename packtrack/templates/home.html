@@ -15,12 +15,12 @@
               lg:mt-8
               xl:text-5xl opacity-90 e">
       TRACK YOUR
-      <span class="bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-blue-500">
+      <span class="bg-clip-text text-transparent bg-gradient-to-br from-blue-400 via-violet-400 to-pink-300">
         PACKAGE
       </span>
     </h1>
 
-    <form action = "/track" METHOD ="GET" class="bg-black opacity-60 shadow-lg rounded-full
+    <form action = "/track" METHOD ="GET" class="bg-black bg-opacity-30 opacity-75 shadow-lg rounded-full
                                              w-5/6 mx-auto mt-10 px-6 pt-6 pb-2
                                              lg:px-11 lg:pb-6
                                              xl:px-9 xl:pb-4
@@ -30,9 +30,9 @@
         <div class="flex">
           <select name="carrier" class="shadow appearance-none border rounded-l-3xl w-1/5 p-3 pl-2 sm:pl-6 mr-0.5 text-gray-400  leading-tight  hover:scale-y-110 duration-300 ease-in-out text-xs md:text-base">
             <option disabled selected style="display:none" value="Empty" >Carrier</option>
-            <option value="USPS" class="text-gray-700">USPS</option>
-            <option value="UPS" class="text-gray-700">UPS</option>
-            <option value="FedEx" class="text-gray-700">FedEx</option>
+            <option value="USPS">USPS</option>
+            <option value="UPS">UPS</option>
+            <option value="FedEx">FedEx</option>
           </select>
           <input
           class=" shadow appearance-none border rounded-r-3xl w-3/5 p-3 pl-4 text-gray-400 leading-tight  transform transition hover:scale-y-110 duration-300 ease-in-out text-xs md:text-base"
@@ -42,7 +42,7 @@
           required="required"
           />
           <button
-          class="w-1/5 ml-2 sm:ml-6 leading-tight bg-gradient-to-r from-yellow-500 to-blue-500 hover:from-blue-500 hover:via-green-300 hover:to-yellow-500 text-white font-bold py-2 rounded-3xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out text-xs md:text-base"
+          class="w-1/5 ml-2 sm:ml-6 leading-tight bg-gradient-to-r from-indigo-500 to-teal-500 hover:from-teal-500 hover:via-violet-300 hover:to-indigo-500 text-white font-bold py-2 rounded-3xl focus:ring transform transition hover:scale-105 duration-300 ease-in-out text-xs md:text-base"
           type="submit"
           >
             Track
@@ -54,9 +54,9 @@
 </div>
 
 <!-- Footer -->
-<div class="w-full fixed bottom-10 text-sm text-center">
-  <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; PackTrack App 2022</a>
+<div class="w-full fixed bottom-10 text-sm text-center text-gray-300">
+  <a class="text-white font-semibold" href="#">&copy; PackTrack App 2022</a>
   - Developed by
-  <a class="text-gray-500 no-underline hover:no-underline" href="/">Chris Pham</a>
+  <a class="text-white font-semibold" href="/">Chris Pham</a>
 </div>
 {% endblock %}
