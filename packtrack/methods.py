@@ -10,10 +10,10 @@ from packtrack import db
 
 API_KEY = os.environ.get('SHIPENGINE_API_KEY')
 
-def getURL(carrier_id, tracking_number):
+def get_URL(carrier_id, tracking_number):
     return "https://api.shipengine.com/v1/tracking?carrier_code=" + carrier_id + "&tracking_number=" + tracking_number
 
-def processURL(URL):
+def process_URL(URL):
     payload={}
     headers = {
     'Host': 'api.shipengine.com',
@@ -26,20 +26,20 @@ def processURL(URL):
     return response_data
 
 
-def getPackageData(carrier_id, tracking_number):
-    URL = getURL(carrier_id, tracking_number)
-    packageData = processURL(URL)
+def get_package_data(carrier_id, tracking_number):
+    URL = get_URL(carrier_id, tracking_number)
+    package_data = process_URL(URL)
     
-    return packageData
+    return package_data
 
-def getPackageByTrackingNumber(tracking_number):
+def get_package_by_tracking_number(tracking_number):
     package = Package.query.filter_by(tracking_number = tracking_number).first()
     return package
 
-def subscribePackage(package):
-    carrierCode = package.carrier_code
-    trackingNumber = package.tracking_number
-    URL = "https://api.shipengine.com/v1/tracking/start?carrier_code=" + carrierCode + "&tracking_number=" + trackingNumber
+def subscribe_package(package):
+    carrier_code = package.carrier_code
+    tracking_number = package.tracking_number
+    URL = "https://api.shipengine.com/v1/tracking/start?carrier_code=" + carrier_code + "&tracking_number=" + tracking_number
     payload={}
     headers = {
         'Host': 'api.shipengine.com',
@@ -51,10 +51,10 @@ def subscribePackage(package):
     print(response.text)
 
 
-def unsubscribePackage(package):
-    carrierCode = package.carrier_code
-    trackingNumber = package.tracking_number
-    URL = "https://api.shipengine.com/v1/tracking/stop?carrier_code=" + carrierCode + "&tracking_number=" + trackingNumber
+def unsubscribe_package(package):
+    carrier_code = package.carrier_code
+    tracking_number = package.tracking_number
+    URL = "https://api.shipengine.com/v1/tracking/stop?carrier_code=" + carrier_code + "&tracking_number=" + tracking_number
     payload={}
     headers = {
         'Host': 'api.shipengine.com',
@@ -66,21 +66,21 @@ def unsubscribePackage(package):
     print(response.text)
 
 
-def getCarrierCode(carrierName):
+def get_carrier_code(carrier_name):
 
     carriers = {'USPS':'usps','UPS':'ups','FedEx':'fedex'}
 
-    return carriers[carrierName]
+    return carriers[carrier_name]
 
-def datetimeConvert(dateStringInput, dateStringInputFormat, dateStringOutputFormat):
+def datetime_convert(dateStringInput, dateStringInputFormat, dateStringOutputFormat):
     datetime_obj = datetime.strptime(dateStringInput, dateStringInputFormat)
     return datetime_obj.strftime(dateStringOutputFormat)
 
-def getUserByEmail(email):
+def get_user_by_email(email):
     user = User.query.filter_by(email = email).first()
     return user
 
-def getLink(user, package):
+def get_link(user, package):
     user_id = user.id
     package_id = package.id
 

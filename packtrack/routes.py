@@ -24,44 +24,44 @@ def home():
 def track():
 
     try:
-      session['carrierCode'] = methods.getCarrierCode(request.args.get('carrier'))
-      session['trackingNumber'] = request.args.get('trackingNum').replace(" ","").lower()
+      session['carrier_code'] = methods.get_carrier_code(request.args.get('carrier'))
+      session['tracking_number'] = request.args.get('tracking_number').replace(" ","").lower()
 
-      packageData = methods.getPackageData(session['carrierCode'], session['trackingNumber'])
+      package_data = methods.get_package_data(session['carrier_code'], session['tracking_number'])
 
-      packageStatus =  packageData['status_description'].upper()
-      packageStatusDescription = packageData["carrier_status_description"]
+      package_status =  package_data['status_description'].upper()
+      package_status_description = package_data["carrier_status_description"]
 
-      events = packageData['events']
+      events = package_data['events']
 
       for event in events:
-        event['event_date'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y').upper()
-        event['event_time'] = methods.datetimeConvert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p').upper()
+        event['event_date'] = methods.datetime_convert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y').upper()
+        event['event_time'] = methods.datetime_convert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p').upper()
 
       latest_event = events[0]
       first_event = events[-1]
 
-      eventNum = len(events)
+      event_num = len(events)
       
       # If there's only one event
-      if eventNum == 1:
-        return render_template("track.html", case = "one",latest_event = latest_event, status = packageStatus, status_description = packageStatusDescription)
+      if event_num == 1:
+        return render_template("track.html", case = "one",latest_event = latest_event, status = package_status, status_description = package_status_description)
       
       # There are more than one event
-      events = events[1:eventNum-1]
-      return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = packageStatus, status_description = packageStatusDescription)
+      events = events[1:event_num-1]
+      return render_template("track.html", case = "many", first_event = first_event, latest_event = latest_event, events = events,  status = package_status, status_description = package_status_description)
     except:
       return redirect("/error")
 
 # Update Page
 @app.route("/update", methods = ['POST'])
 def update():
-  packageName = request.form['packageName']
+  package_name = request.form['package_name']
   email = request.form['email']
 
   # See if package and user already exist in db
-  package = methods.getPackageByTrackingNumber(session['trackingNumber'])
-  user = methods.getUserByEmail(email)
+  package = methods.get_package_by_tracking_number(session['trackingNumber'])
+  user = methods.get_user_by_email(email)
 
   # If user exist, check for package
   if user:
@@ -70,8 +70,8 @@ def update():
       if user not in package.users:
         package.users.append(user)
       else:
-        link = methods.getLink(user, package)
-        return render_template("update.html", packageName = link.package_name, email = email, inlist = True)
+        link = methods.get_link(user, package)
+        return render_template("update.html", package_name = link.package_name, email = email, inlist = True)
     # If package doesn't exist, create new package then add
     else:
       package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'])
@@ -89,14 +89,14 @@ def update():
 
   db.session.commit()
 
-  link = methods.getLink(user, package)
-  link.package_name = packageName
+  link = methods.get_link(user, package)
+  link.package_name = package_name
 
   db.session.commit()
 
-  methods.subscribePackage(package)
+  methods.subscribe_package(package)
 
-  return render_template("update.html", packageName = packageName, email = email, inlist = False)
+  return render_template("update.html", package_name = package_name, email = email, inlist = False)
 
 # Error Page
 @app.route("/error")
@@ -118,11 +118,11 @@ def respond():
     status_description = payload["data"]['status_description']
 
     # Get package in db
-    package = methods.getPackageByTrackingNumber(tracking_number)
+    package = methods.get_package_by_tracking_number(tracking_number)
     
     for user in package.users:
       print(user.email)
-      package_name = methods.getLink(user, package).package_name
+      package_name = methods.get_link(user, package).package_name
       
       # Composing message subject
       subject = "Package Update"
@@ -148,7 +148,7 @@ def respond():
 
     # If package is delivered then unsubscribe and delete in database
     if status == "DE":
-      methods.unsubscribePackage(package)
+      methods.unsubscribe_package(package)
       db.session.delete(package)
       db.session.commit()
 

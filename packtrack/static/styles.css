@@ -660,10 +660,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   bottom: 0px;
 }
 
-.z-20{
-  z-index: 20;
-}
-
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -735,10 +731,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mb-10{
   margin-bottom: 2.5rem;
-}
-
-.mt-5{
-  margin-top: 1.25rem;
 }
 
 .block{
@@ -908,6 +900,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-image: linear-gradient(to top, var(--tw-gradient-stops));
 }
 
+.from-teal-400{
+  --tw-gradient-from: #2dd4bf;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(45 212 191 / 0));
+}
+
 .from-indigo-400{
   --tw-gradient-from: #818cf8;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(129 140 248 / 0));
@@ -933,30 +930,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(255 255 255 / 0));
 }
 
-.from-teal-400{
-  --tw-gradient-from: #2dd4bf;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(45 212 191 / 0));
-}
-
-.from-teal-500{
-  --tw-gradient-from: #14b8a6;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(20 184 166 / 0));
-}
-
 .via-violet-400{
   --tw-gradient-stops: var(--tw-gradient-from), #a78bfa, var(--tw-gradient-to, rgb(167 139 250 / 0));
 }
 
-.via-violet-300{
-  --tw-gradient-stops: var(--tw-gradient-from), #c4b5fd, var(--tw-gradient-to, rgb(196 181 253 / 0));
-}
-
-.via-violet-200{
-  --tw-gradient-stops: var(--tw-gradient-from), #ddd6fe, var(--tw-gradient-to, rgb(221 214 254 / 0));
-}
-
-.via-indigo-500{
-  --tw-gradient-stops: var(--tw-gradient-from), #6366f1, var(--tw-gradient-to, rgb(99 102 241 / 0));
+.to-indigo-500{
+  --tw-gradient-to: #6366f1;
 }
 
 .to-teal-400{
@@ -985,18 +964,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .to-violet-400{
   --tw-gradient-to: #a78bfa;
-}
-
-.to-indigo-500{
-  --tw-gradient-to: #6366f1;
-}
-
-.to-indigo-400{
-  --tw-gradient-to: #818cf8;
-}
-
-.to-white{
-  --tw-gradient-to: #fff;
 }
 
 .bg-clip-text{
@@ -1165,9 +1132,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   letter-spacing: -0.025em;
 }
 
-.text-teal-500{
-  --tw-text-opacity: 1;
-  color: rgb(20 184 166 / var(--tw-text-opacity));
+.text-transparent{
+  color: transparent;
 }
 
 .text-indigo-400{
@@ -1185,23 +1151,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
-.text-transparent{
-  color: transparent;
-}
-
 .text-gray-400{
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-
-.text-indigo-500{
-  --tw-text-opacity: 1;
-  color: rgb(99 102 241 / var(--tw-text-opacity));
-}
-
-.text-indigo-300{
-  --tw-text-opacity: 1;
-  color: rgb(165 180 252 / var(--tw-text-opacity));
 }
 
 .no-underline{
@@ -1368,6 +1320,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:from-pink-400:hover{
+  --tw-gradient-from: #f472b6;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(244 114 182 / 0));
+}
+
 .hover\:from-teal-400:hover{
   --tw-gradient-from: #2dd4bf;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(45 212 191 / 0));
@@ -1376,16 +1333,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:from-teal-500:hover{
   --tw-gradient-from: #14b8a6;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(20 184 166 / 0));
-}
-
-.hover\:from-indigo-500:hover{
-  --tw-gradient-from: #6366f1;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(99 102 241 / 0));
-}
-
-.hover\:from-pink-400:hover{
-  --tw-gradient-from: #f472b6;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(244 114 182 / 0));
 }
 
 .hover\:via-violet-300:hover{
@@ -1400,37 +1347,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-gradient-to: #6366f1;
 }
 
-.hover\:to-teal-400:hover{
-  --tw-gradient-to: #2dd4bf;
-}
-
-.hover\:to-pink-400:hover{
-  --tw-gradient-to: #f472b6;
-}
-
-.hover\:text-indigo-400:hover{
-  --tw-text-opacity: 1;
-  color: rgb(129 140 248 / var(--tw-text-opacity));
-}
-
-.hover\:text-teal-500:hover{
-  --tw-text-opacity: 1;
-  color: rgb(20 184 166 / var(--tw-text-opacity));
-}
-
-.hover\:text-white:hover{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
 .hover\:text-teal-400:hover{
   --tw-text-opacity: 1;
   color: rgb(45 212 191 / var(--tw-text-opacity));
 }
 
-.hover\:text-pink-400:hover{
+.hover\:text-white:hover{
   --tw-text-opacity: 1;
-  color: rgb(244 114 182 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .focus\:ring:focus{
