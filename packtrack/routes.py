@@ -35,8 +35,8 @@ def track():
       events = package_data['events']
 
       for event in events:
-        event['event_date'] = methods.datetime_convert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %B %d %Y').upper()
-        event['event_time'] = methods.datetime_convert(event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p').upper()
+        event['event_date'] = methods.datetime_convert(event['carrier_occurred_at'], '%Y-%m-%dT%H:%M:%S', '%A, %B %d %Y').upper()
+        event['event_time'] = methods.datetime_convert(event['carrier_occurred_at'], '%Y-%m-%dT%H:%M:%S', '%I:%M %p').upper()
 
       latest_event = events[0]
       first_event = events[-1]
@@ -112,8 +112,8 @@ def respond():
     # Get tracking number and lastest tracking event from payload
     tracking_number = payload["data"]["tracking_number"].replace(" ","").lower()
     lastest_event = payload["data"]["events"][0]
-    event_date = methods.datetime_convert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %B %d %Y')
-    event_time = methods.datetime_convert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
+    event_date = methods.datetime_convert(lastest_event['carrier_occurred_at'], '%Y-%m-%dT%H:%M:%S', '%A, %B %d %Y')
+    event_time = methods.datetime_convert(lastest_event['carrier_occurred_at'], '%Y-%m-%dT%H:%M:%S', '%I:%M %p')
     status = payload["data"]["status_code"]
     status_description = payload["data"]['status_description']
 
