@@ -112,8 +112,8 @@ def respond():
     # Get tracking number and lastest tracking event from payload
     tracking_number = payload["data"]["tracking_number"].replace(" ","").lower()
     lastest_event = payload["data"]["events"][0]
-    event_date = methods.datetimeConvert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
-    event_time = methods.datetimeConvert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
+    event_date = methods.datetime_convert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%A, %d %B %Y')
+    event_time = methods.datetime_convert(lastest_event['occurred_at'], '%Y-%m-%dT%H:%M:%SZ', '%I:%M %p')
     status = payload["data"]["status_code"]
     status_description = payload["data"]['status_description']
 
@@ -121,7 +121,7 @@ def respond():
     package = methods.get_package_by_tracking_number(tracking_number)
     
     for user in package.users:
-      print(user.email)
+
       package_name = methods.get_link(user, package).package_name
       
       # Composing message subject
