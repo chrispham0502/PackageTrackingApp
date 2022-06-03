@@ -60,7 +60,7 @@ def update():
   email = request.form['email']
 
   # See if package and user already exist in db
-  package = methods.get_package_by_tracking_number(session['trackingNumber'])
+  package = methods.get_package_by_tracking_number(session['tracking_number'])
   user = methods.get_user_by_email(email)
 
   # If user exist, check for package
@@ -74,7 +74,7 @@ def update():
         return render_template("update.html", package_name = link.package_name, email = email, inlist = True)
     # If package doesn't exist, create new package then add
     else:
-      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'])
+      package = Package(carrier_code = session['carrier_code'], tracking_number = session['tracking_number'])
       package.users.append(user)
       db.session.add(package)
   # If user doesn't exit, create new user
@@ -83,7 +83,7 @@ def update():
     db.session.add(user)
     # If package doesn't exist, create new package
     if not package:
-      package = Package(carrier_code = session['carrierCode'], tracking_number = session['trackingNumber'])
+      package = Package(carrier_code = session['carrier_code'], tracking_number = session['tracking_number'])
     package.users.append(user)
     db.session.add(package)
 
