@@ -4,7 +4,8 @@
 <img src="https://i.imgur.com/8DDFgsL.gif" width="400" height="300">
 
 ## Overview
-A web appplication designed to provide tracking information from multiple carriers all in one page. Save you the time and effort going to different websites trying to get updates for different packages.
+A web appplication designed to provide tracking information from multiple carriers all in one page. 
+Save you the time and effort going to different websites trying to get updates for different packages.
 
 Currently supported carriers:
 - <img src="https://images.law.com/image/EM/USPS%20Logo-Article-201401091108.jpg" width="30" height="20"> USPS
