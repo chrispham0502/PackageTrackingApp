@@ -29,7 +29,7 @@ All you need to do is provide ***carrier name*** and ***tracking number***!
 
 <img src="https://i.imgur.com/8XOocI1.png" width="400" height="175">
 
-The app will retrieve the and show you all the tracking information of your package.
+The app will retrieve and show you all the tracking information of your package.
 
 <img src="https://i.imgur.com/irv8lgV.png" width="400" height="500">
 
