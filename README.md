@@ -27,7 +27,7 @@ The app was developed using:
 
 All you need to do is provide ***carrier name*** and ***tracking number***!
 
-<img src="https://i.imgur.com/8XOocI1.png" width="400" height="175">
+<img src="https://i.imgur.com/ziUKEfB.png" width="400" height="175">
 
 The app will retrieve and show you all the tracking information of your package.
 
