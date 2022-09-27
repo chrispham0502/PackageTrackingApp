@@ -44,4 +44,4 @@ Have a package to track? [Give it a try!](https://chrispham-packtrack.herokuapp.
 
 
 ## Footnote
-Special thanks to [Bao Huynh](https://github.com/bhuynhdev) for having showed and taught me a lot of new things.
+Special thanks to [Bao Huynh](https://github.com/bhuynhdev) for having taught me a lot of new things.
