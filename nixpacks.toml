@@ -1,7 +1,7 @@
 [phases.setup]
 providers = ['python']
 nixPkgs = ['gcc', 'python38']
-aptPkgs = ['libpq-dev', 'rsyslog-gssapi']
+aptPkgs = ['libpq-dev', 'libgssapi_krb5']
 
 [phases.install]
 cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt']
