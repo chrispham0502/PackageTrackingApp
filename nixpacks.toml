@@ -1,7 +1,7 @@
 [phases.setup]
 providers = ['python']
 nixPkgs = ['gcc', 'python38']
-aptPkgs = ['libpq-dev']
+aptPkgs = ['libpq-dev', 'libmysqlclient-dev']
 
 [phases.install]
 cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt && /opt/venv/bin/python -m pip install --upgrade pip']
