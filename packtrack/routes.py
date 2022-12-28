@@ -108,14 +108,14 @@ def error():
 def respond():
 
     payload = request.json
-
+    data = payload["data"]
     # Get tracking number and lastest tracking event from payload
-    tracking_number = payload["data"]["tracking_number"].replace(" ","").lower()
-    lastest_event = payload["data"]["events"][0]
+    tracking_number = data["tracking_number"].replace(" ","").lower()
+    lastest_event = data["events"][0]
     event_date = methods.datetime_convert(lastest_event['carrier_occurred_at'], '%Y-%m-%dT%H:%M:%S', '%A, %B %d %Y')
     event_time = methods.datetime_convert(lastest_event['carrier_occurred_at'], '%Y-%m-%dT%H:%M:%S', '%I:%M %p')
-    status = payload["data"]["status_code"]
-    status_description = payload["data"]['status_description']
+    status = data["status_code"]
+    status_description = data["status_description"]
 
     # Get package in db
     package = methods.get_package_by_tracking_number(tracking_number)
