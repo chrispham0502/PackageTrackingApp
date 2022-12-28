@@ -27,7 +27,7 @@ The app was developed using:
 
 All you need to do is provide ***carrier name*** and ***tracking number***!
 
-<img src="https://i.imgur.com/8XOocI1.png" width="400" height="175">
+<img src="https://i.imgur.com/ziUKEfB.png" width="400" height="175">
 
 The app will retrieve and show you all the tracking information of your package.
 
@@ -44,4 +44,4 @@ Have a package to track? [Give it a try!](https://chrispham-packtrack.herokuapp.
 
 
 ## Footnote
-Special thanks to [Bao Huynh](https://github.com/bhuynhdev) for having showed and taught me a lot of new things.
+Special thanks to [Bao Huynh](https://github.com/bhuynhdev) for having taught me a lot of new things.

@@ -1,0 +1,10 @@
+[phases.setup]
+providers = ['python']
+nixPkgs = ['gcc', 'python38']
+aptPkgs = ['libpq-dev']
+
+[phases.install]
+cmds = ['python -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt']
+
+[start]
+cmd = '. /opt/venv/bin/activate && gunicorn app:app'
