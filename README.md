@@ -39,7 +39,7 @@ Want to get ***real-time updates***? I've got you covered. All you need is an **
 <img src="https://i.imgur.com/kxzKfZA.png" width="400" height="225">
 
 
-Have a package to track? [Give it a try!](trietpham.me/packtrack)
+Have a package to track? [Give it a try!](https://trietpham.me/packtrack)
 
 
 
